@@ -1,4 +1,4 @@
-# llvm-party - Haskell bindings for LLVM
+# llvm-party - Haskell bindings for LLVM - WGM's development repo
 
 [![Build Status](https://travis-ci.org/llvm-hs/llvm-hs.svg?branch=llvm-6)](https://travis-ci.org/llvm-hs/llvm-hs) [![Hackage](https://img.shields.io/hackage/v/llvm-hs.svg)](https://hackage.haskell.org/package/llvm-hs)
 

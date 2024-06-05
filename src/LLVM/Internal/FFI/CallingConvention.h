@@ -7,7 +7,6 @@
   macro(Cold, 9)                                   \
   macro(GHC, 10)                                   \
   macro(HiPE, 11)                                  \
-  macro(WebKit_JS, 12)                             \
   macro(AnyReg, 13)                                \
   macro(PreserveMost, 14)                          \
   macro(PreserveAll, 15)                           \
@@ -28,8 +27,6 @@
   macro(X86_64_SysV, 78)                           \
   macro(Win64, 79)                                 \
   macro(X86_VectorCall, 80)                        \
-  macro(HHVM, 81)                                  \
-  macro(HHVM_C, 82)                                \
   macro(X86_INTR, 83)                              \
   macro(AVR_INTR, 84)                              \
   macro(AVR_SIGNAL, 85)                            \

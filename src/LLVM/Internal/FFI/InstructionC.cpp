@@ -289,8 +289,8 @@ LLVMValueRef LLVM_Hs_GetParentPad(LLVMValueRef i) {
     return wrap(unwrap<FuncletPadInst>(i)->getParentPad());
 }
 
-unsigned LLVM_Hs_GetNumArgOperands(LLVMValueRef i) {
-    return unwrap<FuncletPadInst>(i)->getNumArgOperands();
+unsigned LLVM_Hs_GetNumArgSize(LLVMValueRef i) {
+    return unwrap<FuncletPadInst>(i)->arg_size();
 }
 
 LLVMValueRef LLVM_Hs_GetArgOperand(LLVMValueRef i, unsigned op) {

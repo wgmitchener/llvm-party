@@ -68,34 +68,12 @@ LLVMValueRef LLVM_Hs_ConstSub(unsigned nsw, unsigned nuw, LLVMValueRef o0, LLVMV
     return wrap(ConstantExpr::getSub(unwrap<Constant>(o0), unwrap<Constant>(o1), nuw != 0, nsw != 0));
 }
 
-LLVMValueRef LLVM_Hs_ConstUDiv(unsigned isExact, LLVMValueRef o0, LLVMValueRef o1) {
-    return wrap(ConstantExpr::getUDiv(unwrap<Constant>(o0), unwrap<Constant>(o1), isExact != 0));
-}
-
-LLVMValueRef LLVM_Hs_ConstSDiv(unsigned isExact, LLVMValueRef o0, LLVMValueRef o1) {
-    return wrap(ConstantExpr::getSDiv(unwrap<Constant>(o0), unwrap<Constant>(o1), isExact != 0));
-}
-
-LLVMValueRef LLVM_Hs_ConstLShr(unsigned isExact, LLVMValueRef o0, LLVMValueRef o1) {
-    return wrap(ConstantExpr::getLShr(unwrap<Constant>(o0), unwrap<Constant>(o1), isExact != 0));
-}
-
-LLVMValueRef LLVM_Hs_ConstAShr(unsigned isExact, LLVMValueRef o0, LLVMValueRef o1) {
-    return wrap(ConstantExpr::getAShr(unwrap<Constant>(o0), unwrap<Constant>(o1), isExact != 0));
-}
-
 unsigned LLVM_Hs_GetConstCPPOpcode(LLVMValueRef v) {
     return unwrap<ConstantExpr>(v)->getOpcode();
 }
 
 unsigned LLVM_Hs_GetConstPredicate(LLVMValueRef v) {
     return unwrap<ConstantExpr>(v)->getPredicate();
-}
-
-const unsigned *LLVM_Hs_GetConstIndices(LLVMValueRef v, unsigned *n) {
-    ArrayRef<unsigned> r = unwrap<ConstantExpr>(v)->getIndices();
-    *n = r.size();
-    return r.data();
 }
 
 const uint64_t *LLVM_Hs_GetConstantIntWords(LLVMValueRef v, unsigned *n) {

@@ -1,6 +1,10 @@
 #define __STDC_LIMIT_MACROS
+#include <optional>
+
 #include "LLVM/Internal/FFI/AttributeC.hpp"
 #include "llvm/IR/LLVMContext.h"
+
+using std::optional;
 
 extern "C" {
 
@@ -88,12 +92,12 @@ void LLVM_Hs_getAttributes(AttributeSet *attributeSet,
 
 size_t LLVM_Hs_GetAttrBuilderSize() { return sizeof(AttrBuilder); }
 
-AttrBuilder *LLVM_Hs_ConstructAttrBuilder(char *p) {
-    return new (p) AttrBuilder();
+AttrBuilder *LLVM_Hs_ConstructAttrBuilder(char *p, LLVMContext &Ctx) {
+    return new (p) AttrBuilder(Ctx);
 }
 
-AttrBuilder *LLVM_Hs_AttrBuilderFromAttrSet(AttributeSet *as) {
-    return new AttrBuilder(*as);
+AttrBuilder *LLVM_Hs_AttrBuilderFromAttrSet(LLVMContext &Ctx, AttributeSet *as) {
+  return new AttrBuilder(Ctx, *as);
 }
 
 void LLVM_Hs_DisposeAttrBuilder(AttributeSet *as) { delete as; }
@@ -125,9 +129,9 @@ void LLVM_Hs_AttrBuilderAddStackAlignment(AttrBuilder &ab, uint64_t v) {
 void LLVM_Hs_AttrBuilderAddAllocSize(AttrBuilder &ab, unsigned x, unsigned y,
                                      LLVMBool optionalIsThere) {
     if (optionalIsThere) {
-        ab.addAllocSizeAttr(x, Optional<unsigned>(y));
+        ab.addAllocSizeAttr(x, optional<unsigned>(y));
     } else {
-        ab.addAllocSizeAttr(x, Optional<unsigned>());
+        ab.addAllocSizeAttr(x, optional<unsigned>());
     }
 }
 
@@ -144,11 +148,10 @@ LLVMBool LLVM_Hs_AttributeGetAllocSizeArgs(LLVMAttributeRef a, unsigned *x,
                                            unsigned *y) {
     auto pair = unwrap(a).getAllocSizeArgs();
     *x = pair.first;
-    if (pair.second.hasValue()) {
-        *y = pair.second.getValue();
+    if (pair.second.has_value()) {
+        *y = pair.second.value();
         return 1;
-    } else {
-        return 0;
     }
+    return 0;
 }
 }

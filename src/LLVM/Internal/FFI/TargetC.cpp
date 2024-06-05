@@ -502,7 +502,7 @@ LLVMTargetMachineRef LLVM_Hs_CreateTargetMachine(
     LLVMTargetRef T, const char *Triple, const char *CPU, const char *Features,
     TargetOptions *TO, LLVMRelocMode Reloc, LLVMCodeModel CodeModel,
     LLVMCodeGenOptLevel Level) {
-    Optional<Reloc::Model> RM;
+    optional<Reloc::Model> RM;
     switch (Reloc) {
     case LLVMRelocStatic:
         RM = Reloc::Static;
@@ -518,7 +518,7 @@ LLVMTargetMachineRef LLVM_Hs_CreateTargetMachine(
     }
 
     bool JIT;
-    Optional<CodeModel::Model> CM = unwrap(CodeModel, JIT);
+    optional<CodeModel::Model> CM = unwrap(CodeModel, JIT);
 
     CodeGenOpt::Level OL;
     switch (Level) {

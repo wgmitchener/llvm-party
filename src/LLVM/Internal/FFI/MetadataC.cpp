@@ -1,6 +1,8 @@
 #define __STDC_LIMIT_MACROS
 
 #include <iostream>
+#include <optional>
+
 #include "llvm/Support/FormattedStream.h"
 
 #include "llvm/Config/llvm-config.h"
@@ -300,7 +302,7 @@ unsigned LLVM_Hs_DIBasicType_GetEncoding(DIBasicType *ds) {
 // DIDerivedType
 DIDerivedType* LLVM_Hs_Get_DIDerivedType(LLVMContextRef ctx, uint16_t tag, MDString* name, DIFile *file, unsigned line, DIScope *scope, DIType *baseType, uint64_t sizeInBits, uint32_t alignInBits, uint64_t offsetInBits, uint32_t dwarfAddressSpace, LLVMBool dwarfAddressSpacePresent, DINode::DIFlags flags) {
     LLVMContext& c = *unwrap(ctx);
-    Optional<unsigned> addrSpace;
+    optional<unsigned> addrSpace;
     if (dwarfAddressSpacePresent) {
         addrSpace = dwarfAddressSpace;
     }

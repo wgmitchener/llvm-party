@@ -12,6 +12,7 @@
 #include "llvm-c/Core.h"
 
 using namespace llvm;
+using std::optional;
 
 extern "C" {
 
@@ -228,7 +229,7 @@ MDString* LLVM_Hs_DIFileGetDirectory(DIFile *di) {
 
 MDString* LLVM_Hs_DIFileGetChecksum(DIFile *di) {
     auto checksumInfo = di->getRawChecksum();
-    if (checksumInfo.hasValue()) {
+    if (checksumInfo.has_value()) {
         return checksumInfo->Value;
     }
     return nullptr;
@@ -236,7 +237,7 @@ MDString* LLVM_Hs_DIFileGetChecksum(DIFile *di) {
 
 llvm::DIFile::ChecksumKind LLVM_Hs_DIFileGetChecksumKind(DIFile *di) {
     auto checksumInfo = di->getRawChecksum();
-    if (checksumInfo.hasValue()) {
+    if (checksumInfo.has_value()) {
         return checksumInfo->Kind;
     }
     return static_cast<llvm::DIFile::ChecksumKind>(0);

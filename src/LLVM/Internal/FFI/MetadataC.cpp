@@ -5,6 +5,7 @@
 
 #include "llvm/Support/FormattedStream.h"
 
+#include "llvm/BinaryFormat/Dwarf.h"
 #include "llvm/Config/llvm-config.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Metadata.h"
@@ -474,12 +475,11 @@ DILexicalBlock* LLVM_Hs_Get_DILexicalBlock(LLVMContextRef ctx, DILocalScope* sco
 
 LLVMBool LLVM_Hs_DIDerivedTypeGetAddressSpace(DIDerivedType *a, unsigned *x) {
     auto addressSpace = a->getDWARFAddressSpace();
-    if (addressSpace.hasValue()) {
-        *x = addressSpace.getValue();
+    if (addressSpace.has_value()) {
+        *x = addressSpace.value();
         return 1;
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 // DISubroutineType
@@ -636,10 +636,11 @@ uint32_t LLVM_Hs_DIVariable_GetAlignInBits(DIVariable* v) {
 DILocalVariable* LLVM_Hs_Get_DILocalVariable(LLVMContextRef ctx,
                                              DIScope* scope, MDString* name, DIFile* file,
                                              uint32_t line, DIType* type, uint16_t arg,
-                                             DINode::DIFlags flags, uint32_t alignInBits) {
+                                             DINode::DIFlags flags, uint32_t alignInBits,
+                                             Metadata* annotations) {
     LLVMContext &c = *unwrap(ctx);
     return DILocalVariable::get(c, static_cast<DILocalScope*>(scope), name, file, line, type,
-                                arg, flags, alignInBits);
+                                arg, flags, alignInBits, annotations);
 }
 
 uint16_t LLVM_Hs_DILocalVariable_GetArg(DILocalVariable* v) {
@@ -658,13 +659,14 @@ DIGlobalVariable* LLVM_Hs_Get_DIGlobalVariable(LLVMContextRef ctx,
                                                LLVMBool isLocalToUnit, LLVMBool isDefinition,
                                                DIDerivedType* declaration,
                                                Metadata* templateParams,
-                                               uint32_t alignInBits) {
+                                               uint32_t alignInBits,
+                                               Metadata* annotations) {
     LLVMContext &c = *unwrap(ctx);
     return DIGlobalVariable::get(c, scope, name, linkageName,
                                  file, line, type,
                                  isLocalToUnit, isDefinition,
                                  declaration, templateParams,
-                                 alignInBits);
+                                 alignInBits, annotations);
 }
 
 LLVMBool LLVM_Hs_DIGlobalVariable_GetLocal(DIGlobalVariable* v) {

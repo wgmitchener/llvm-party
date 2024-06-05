@@ -59,11 +59,11 @@ LLVM_HS_FOR_EACH_FAST_MATH_FLAG(ENUM_CASE)
 #undef ENUM_CASE
 } LLVMFastMathFlagBit;
 
-typedef enum {
+enum {
 #define ENUM_CASE(x,l,takesArg) LLVM ## x = (1 << LLVM ## x ## Bit),
 LLVM_HS_FOR_EACH_FAST_MATH_FLAG(ENUM_CASE)
 #undef ENUM_CASE
-} LLVMFastMathFlags;
+};
 
 #define LLVM_HS_FOR_EACH_TAIL_CALL_KIND(macro) \
     macro(None)                                       \
